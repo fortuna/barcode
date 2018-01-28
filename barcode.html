@@ -34,7 +34,11 @@
   </div>
 </body>
 <script>
-  JsBarcode("#barcode", "14355678902", { format: "upc" });
+  // 11-digit random number
+  var random_number = Math.floor(Math.random() * 1000 * 1000 * 1000 * 100).toString();
+  var template = "00000000000";
+  var formatted_number = template.substr(0, 11 - random_number.length) + random_number
+  JsBarcode("#barcode", formatted_number, { format: "upc" });
 </script>
 
 </html>
