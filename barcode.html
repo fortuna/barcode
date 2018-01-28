@@ -5,6 +5,7 @@
   .barcode-card {
     margin: 30px auto;
   }
+
   .mdl-card__supporting-text {
     text-align: center;
   }
@@ -34,10 +35,22 @@
   </div>
 </body>
 <script>
-  // 11-digit random number
-  var random_number = Math.floor(Math.random() * 1000 * 1000 * 1000 * 100).toString();
+  function getParameterByName(name, url) {
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+      results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+  }
+  var random_number_str = getParameterByName("number", window.location.href)
+  if (random_number_str === null) {
+    // 11-digit random number
+    var random_number_str = Math.floor(Math.random() * 1000 * 1000 * 1000 * 100).toString();
+    location.search = "number=" + random_number_str;
+  }
   var template = "00000000000";
-  var formatted_number = template.substr(0, 11 - random_number.length) + random_number
+  var formatted_number = template.substr(0, 11 - random_number_str.length) + random_number_str
   JsBarcode("#barcode", formatted_number, { format: "upc" });
 </script>
 
